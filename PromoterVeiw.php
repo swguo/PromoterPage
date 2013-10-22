@@ -1,7 +1,5 @@
 <?php 
 
-	//require_once('../../Connections/CaseMeg.php'); 
-
     // 資料庫連結
     require_once("../../Connections/connect.php");  
     $link=create_connection();  
@@ -10,21 +8,17 @@
 ?>
 
 <?php
-/*$sql = " SELECT promoter.IDD,Name ,NickName,Address,country.CountryName,Telephone from promoter 
-			LEFT JOIN country 
-			ON country.IDD = promoter.Country 
-			WHERE  Name='".$_POST['search']."'";
-*/
+
 if($_POST["search"]){
 	
             //取出資料欄位CompanyName , ContactName , ContactTitle
 			
-            $sql = " SELECT IDD,Name ,NickName,Address,Country,Telephone from promoter 			
+            $sql = " SELECT IDD,Name ,NickName,Investiture,Telephone,Mobilephone from promoter 			
 			WHERE  Name='".$_POST['search']."'";
 			 $sqlc = "select count(*) from promoter where Name='".$_POST['search']."'"; // 計算資料表 nwsuppliers 總筆數
 	
 }else{
-            $sql = " SELECT IDD,Name ,NickName,Address,Country,Telephone from promoter ";
+            $sql = " SELECT IDD,Name ,NickName,Investiture,Telephone,Mobilephone from promoter ";
 			
 			$sqlc = "select count(*) from promoter";// 計算資料表 nwsuppliers 總筆數
 }
@@ -57,8 +51,8 @@ if($_POST["search"]){
     //若資料庫中無任何資料
     if($totalNum == 0)
     {
-        echo "目前沒有資料";
-        exit;
+        //echo "目前沒有資料";
+        //exit;
     }
   
     //開始起始指標
@@ -118,75 +112,69 @@ if($_POST["search"]){
 <title>客戶資料檢視</title>
 </head>
     <link type="text/css" rel="stylesheet" href="../../css/bootstrap.css">
-        <script language="JavaScript">
-            function chg(np, n){
-                document.sd.page.value=np;
-                document.sd.pern.value=n;
-                document.sd.submit();
-            }
-        </script>
-<style type="text/css">
-body{
-	font-family: "標楷體", "DFKai-sb", serif;
-	
-	
-}
-body div form table tr td {
-	font-size: 16px;
-	color: #333;
-	line-height:30px;
-	font-family: "微軟正黑體", "Microsoft JhengHei", "新細明體", "PMingLiU", "細明體", "MingLiU", "標楷體", "DFKai-sb", serif;
-	
-}
-</style>
+
+    <link type="text/css" rel="stylesheet" href="../../css/new/bootstrap.css">
+
+    <script type="text/javascript" src="../../js/main.js"></script>
 
 
+
+</div>
 <body>
-<h4><a href="#" >資料首頁</a> > <a href="#" >系統檔案維護</a> > <a href="PromoterVeiw.php" >客戶資料</a> > <a href="#" >檢視資料</a></h4>
+<h4><a href="#" >資料首頁</a> > <a href="#" >系統檔案維護</a> > <a href="PromoterVeiw.php" >承辦人/處理人/代理人</a> > <a href="#" >檢視資料</a></h4>
 <hr />
-<form action="PromoterVeiw.php" method="post" >
-<input type="text" name="search" id="search" value=""  />
+
+
+<form action="PromoterVeiw.php" method="post" class="well form-search">
+
+<input type="text" name="search" placeholder="姓名" id="search"   />
+ 
 <input type="submit"  value="搜尋"  />
 
 
 </form>
 
 <input type="button"  value="新增"  onclick="location.href='PromoterEdit.php'"/>
+
     <form action="PromoterVeiw.php" method="post" name="sd">
         <input type="hidden" name="page"> 
         <input type="hidden" name="pern">   
     </form>
+    </div>
 <h4>
+
     <table class="table table-striped table-bordered table-condensed" align='center' >
         <tr align='center' > 
-        <td nowrap width='10'>客戶名稱</td>
-        <td nowrap width='10'></td>
-        <td nowrap width='10'></td>
-        <td nowrap width='10'>暱稱</td>
-        <td nowrap width='10'>地址</td>
-		<td nowrap width='10'>國家</td>
-		<td nowrap width='10'>電話</td>
+        <td nowrap class="col-sm-2">編號</td>
+        <td nowrap class="col-sm-2">姓名</td>
+        <td nowrap class="col-sm-1"></td>
+        <td nowrap class="col-sm-1"></td>
+        <td nowrap class="col-sm-1">暱稱</td>
+        <td nowrap class="col-sm-1">職稱</td>
+		<td nowrap class="col-sm-2">電話</td>
+		<td nowrap class="col-sm-2">手機</td>
         </tr>
         <?php
 
             //顯示資料
             for($i=$startId;$i<$startId+$realPerNum;$i++){
                 mysql_data_seek($rsq,$i);
-               list( $CusIDD , $CusName, $CusNickName,$CusAddress,$CusCounty,$CusTelephone ) = mysql_fetch_row($rsq);
+               list( $ProIDD , $ProName, $ProNickName,$ProInvestiture,$ProTelephone,$ProMobilephone ) = mysql_fetch_row($rsq);
         ?>
         <tr align='center'>
-            <td nowrap ><a href="PromoterShow.php?IDD=<?php echo $CusIDD ;?>"><?php echo $CusName;?></a></td>
-            <td nowrap ><input type="button" name="Edit" id="Edit" value="編輯" onClick="if(confirm('您確定編輯?'))window.location.href='PromoterEdit.php?IDD=<?php echo $CusIDD; ?>';else return false"/> </td>
-        	<td nowrap ><input type="button" name="Delete" id="Delete" value="刪除" onClick="if(confirm('確定要刪除?'))window.location.href='PromoterDelete.php?IDD=<?php echo $CusIDD; ?>';else return false" /></td>
-            <td nowrap ><?php echo $CusNickName;?></td>
-            <td nowrap ><?php echo $CusAddress;?></td>    
-            <td nowrap ><?php echo $CusCounty;?></td>    
-            <td nowrap ><?php echo $CusTelephone;?></td>    
+            <td nowrap ><?php echo $ProIDD;?></td>
+            <td nowrap ><a href="PromoterShow.php?IDD=<?php echo $ProIDD ;?>"><?php echo $ProName;?></a></td>
+            <td nowrap ><input type="button" name="Edit" id="Edit" value="編輯" onClick="if(confirm('您確定編輯?'))window.location.href='PromoterEdit.php?IDD=<?php echo $ProIDD; ?>';else return false"/> </td>
+        	<td nowrap ><input type="button" name="Delete" id="Delete" value="刪除" onClick="if(confirm('確定要刪除?'))window.location.href='PromoterDelete.php?IDD=<?php echo $ProIDD; ?>';else return false" /></td>
+            <td nowrap ><?php echo $ProNickName;?></td>
+            <td nowrap ><?php echo $ProInvestiture;?></td>    
+            <td nowrap ><?php echo $ProTelephone;?></td>    
+            <td nowrap ><?php echo $ProMobilephone;?></td>    
         </tr>
         <?php } ?>
     </table>
   
-    <form>
+    <form class="pagination pagination-centered">
         <div class="pagination pagination-centered">
         <ul>
             <?php echo $firstPgLink; //第一頁 ?> 
