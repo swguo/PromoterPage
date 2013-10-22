@@ -57,7 +57,7 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 ?>
 
 <body>
-<h4><a href="#" >資料首頁</a> > <a href="#" >系統檔案維護</a> > <a href="PromoterVeiw.php" >承辦人/處理人/代理人</a> > <a href="#" >瀏覽資料</a></h4>
+<h4><strong><a href="#" >資料首頁</a> > <a href="#" >系統檔案維護</a> > <a href="PromoterVeiw.php" >承辦人/處理人/代理人</a> > <a href="#" >瀏覽資料</a></strong></h4>
 <hr />
     <form action="PromoterVeiw.php" method="post"  style="width:auto" name="form2" enctype="multipart/form-data" >
     <div id="main">

@@ -112,22 +112,21 @@ if($_POST["search"]){
 <title>客戶資料檢視</title>
 </head>
     <link type="text/css" rel="stylesheet" href="../../css/bootstrap.css">
-
     <link type="text/css" rel="stylesheet" href="../../css/new/bootstrap.css">
 
     <script type="text/javascript" src="../../js/main.js"></script>
 
 
 
-</div>
+
 <body>
-<h4><a href="#" >資料首頁</a> > <a href="#" >系統檔案維護</a> > <a href="PromoterVeiw.php" >承辦人/處理人/代理人</a> > <a href="#" >檢視資料</a></h4>
+<h4><strong><a href="#" >資料首頁</a> > <a href="#" >系統檔案維護</a> > <a href="PromoterVeiw.php" >承辦人/處理人/代理人</a> > <a href="#" >檢視資料</a></strong></h4>
 <hr />
 
 
 <form action="PromoterVeiw.php" method="post" class="well form-search">
 
-<input type="text" name="search" placeholder="姓名" id="search"   />
+<input type="text" name="search" placeholder="ex: 請使用姓名搜尋" id="search"   />
  
 <input type="submit"  value="搜尋"  />
 
